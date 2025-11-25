@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Photo Album</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Smart Photo Album</h1>
+
+  <!-- Search box -->
+  <section>
+    <h2>Search Photos</h2>
+    <input id="searchBox" type="text" placeholder="Search (e.g. cat, beach, Sam)" />
+    <button id="searchBtn">Search</button>
+    <div id="searchStatus"></div>
+    <div id="results"></div>
+  </section>
+
+  <hr>
+
+  <!-- Upload box -->
+  <section>
+    <h2>Upload Photo</h2>
+    <input id="fileInput" type="file" accept="image/*" />
+    <input id="customLabels" type="text" placeholder="Custom labels (comma separated: Sam, Sally)" />
+    <button id="uploadBtn">Upload</button>
+    <div id="uploadStatus"></div>
+  </section>
+
+  <script src="sdk/lib/axios/dist/axios.standalone.js"></script>
+  <script src="sdk/lib/CryptoJS/rollups/crypto-js.js"></script>
+  <script src="sdk/lib/CryptoJS/rollups/sha256.js"></script>
+  <script src="sdk/lib/CryptoJS/components/hmac.js"></script>
+  <script src="sdk/lib/CryptoJS/components/enc-base64.js"></script>
+  <script src="sdk/lib/url-template/url-template.js"></script>
+
+  <!-- apiGateway core: order matters -->
+  <script src="sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+  <script src="sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script src="sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script src="sdk/lib/apiGatewayCore/utils.js"></script>
+
+  <!-- Generated client -->
+  <script src="sdk/apigClient.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
