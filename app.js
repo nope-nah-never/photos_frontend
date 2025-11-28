@@ -126,7 +126,11 @@ document.getElementById('uploadBtn').onclick = function () {
   //   };
 
     const body = fileData
-    const additionalParams = {};
+    const additionalParams = {
+      "headers":{
+        "Content-Type": file.type,
+      }
+    };
 
     apigClient.uploadFilenamePut(params, body, additionalParams)
       .then(function (response) {
