@@ -66,7 +66,8 @@ function renderResults(results) {
     wrapper.style.textAlign = 'center';
 
     const img = document.createElement('img');
-    img.src = result.url;       // presigned URL from Lambda
+    img.src = result.url;    // presigned URL from Lambda
+    console.log(img.src)
     img.alt = 'Photo';
     img.style.maxWidth = '200px';
     img.style.borderRadius = '4px';
