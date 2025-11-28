@@ -150,7 +150,11 @@ document.getElementById('uploadBtn').onclick = function () {
         "x-amz-meta-customLabels": customLabels,
     };
 
-    const additionalParams = {};
+    const additionalParams = {
+      "headers": {
+        "Content-Type": file.type,
+      }
+    };
 
     // Wrap the ArrayBuffer in a Blob
     const body = new Blob([arrayBuffer], { type: file.type });
