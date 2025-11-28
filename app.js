@@ -174,7 +174,7 @@ document.getElementById('uploadBtn').onclick = function () {
     const params = {
       filename: file.name,
       "Content-Type": file.type,
-      "x-amz-meta-customlabels": customLabels
+      "x-amz-meta-customLabels": customLabels
     };
 
     const body = base64Data;
