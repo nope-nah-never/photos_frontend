@@ -112,7 +112,7 @@ document.getElementById('uploadBtn').onclick = function () {
     const fileData = e.target.result;
     const params = {
       filename: file.name,
-      'Content-Type': file.type || 'image/jpeg',
+      'Content-Type': 'image/jpeg' || 'image/png',
       'x-amz-meta-customLabels': customLabels
     };
 
