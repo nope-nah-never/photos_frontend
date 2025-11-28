@@ -6,27 +6,55 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Smart Photo Album</h1>
+  <div class="page">
+    <header class="header">
+      <h1>Smart Photo Album</h1>
+      <p class="subtitle">
+        Search your photos by objects, scenes, or people names – and upload new ones with custom labels.
+      </p>
+    </header>
 
-  <!-- Search box -->
-  <section>
-    <h2>Search Photos</h2>
-    <input id="searchBox" type="text" placeholder="Search (e.g. cat, beach, Sam)" />
-    <button id="searchBtn">Search</button>
-    <div id="searchStatus"></div>
-    <div id="results"></div>
-  </section>
+    <main class="grid">
+      <!-- Search box -->
+      <section class="card">
+        <h2>Search Photos</h2>
+        <p class="section-desc">
+          Try things like <strong>“cat”</strong>, <strong>“beach”</strong>, or <strong>“Sam”</strong>.
+        </p>
+        <div class="field-row">
+          <input id="searchBox" type="text"
+                 placeholder="Search (e.g. cat, beach, Sam)" />
+          <button id="searchBtn" class="btn primary">Search</button>
+        </div>
+        <div id="searchStatus" class="status"></div>
+        <div id="results" class="results-grid"></div>
+      </section>
 
-  <hr>
+      <!-- Upload box -->
+      <section class="card">
+        <h2>Upload Photo</h2>
+        <p class="section-desc">
+          Choose an image and optionally add custom labels
+          (comma-separated): <strong>Sam, Sally, birthday</strong>.
+        </p>
+        <div class="field-group">
+          <label class="field-label">Choose image</label>
+          <input id="fileInput" type="file" accept="image/*" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Custom labels</label>
+          <input id="customLabels" type="text"
+                 placeholder="Custom labels (comma separated: Sam, Sally)" />
+        </div>
+        <button id="uploadBtn" class="btn secondary">Upload</button>
+        <div id="uploadStatus" class="status"></div>
+      </section>
+    </main>
 
-  <!-- Upload box -->
-  <section>
-    <h2>Upload Photo</h2>
-    <input id="fileInput" type="file" accept="image/*" />
-    <input id="customLabels" type="text" placeholder="Custom labels (comma separated: Sam, Sally)" />
-    <button id="uploadBtn">Upload</button>
-    <div id="uploadStatus"></div>
-  </section>
+    <footer class="footer">
+      <small>Smart Photo Album &middot; CS-GY 9223</small>
+    </footer>
+  </div>
 
   <script src="sdk/lib/axios/dist/axios.standalone.js"></script>
   <script src="sdk/lib/CryptoJS/rollups/crypto-js.js"></script>
@@ -44,6 +72,6 @@
   <!-- Generated client -->
   <script src="sdk/apigClient.js"></script>
   <script src="app.js"></script>
-
 </body>
 </html>
+
