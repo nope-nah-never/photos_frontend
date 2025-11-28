@@ -108,18 +108,27 @@ document.getElementById('uploadBtn').onclick = function () {
   statusEl.innerText = 'Uploading...';
 
   const reader = new FileReader();
+  // reader.onload = function (e) {
+  //   const fileData = e.target.result;
+  //   const params = {
+  //     filename: file.name,
+  //     'Content-Type': file.type,
+  //     'x-amz-meta-customLabels': customLabels
+  //   };
+
   reader.onload = function (e) {
-    const fileData = e.target.result;
+    const arrayBuffer = e.target.result;
+    const uint8Array = new Uint8Array(arrayBuffer);
     const params = {
       filename: file.name,
-      'Content-Type': 'image/jpeg' || 'image/png',
-      'x-amz-meta-customLabels': customLabels
+      "Content-Type": file.type,
+      "x-amz-meta-customLabels": customLabels
     };
 
     const body = fileData;
     const additionalParams = {};
 
-    apigClient.uploadFilenamePut(params, body, additionalParams)
+    apigClient.uploadFilenamePut(params, uint8Array, additionalParams)
       .then(function (response) {
         console.log('Upload response', response);
         statusEl.innerText = 'Upload successful!';
