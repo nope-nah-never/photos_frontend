@@ -125,7 +125,6 @@ document.getElementById('uploadBtn').onclick = function () {
       "x-amz-meta-customLabels": customLabels
     };
 
-    const body = fileData;
     const additionalParams = {};
 
     apigClient.uploadFilenamePut(params, uint8Array, additionalParams)
