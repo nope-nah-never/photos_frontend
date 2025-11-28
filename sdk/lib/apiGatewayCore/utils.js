@@ -58,7 +58,17 @@ apiGateway.core.utils = {
         return false;
     },
     copy: function (obj) {
-        if (null == obj || "object" != typeof obj) return obj;
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+
+        // Preserve typed arrays/ArrayBuffers as-is to avoid calling their constructor without `new`.
+        if (typeof ArrayBuffer !== 'undefined') {
+            if (obj instanceof ArrayBuffer || ArrayBuffer.isView(obj)) {
+                return obj;
+            }
+        }
+
         var copy = obj.constructor();
         for (var attr in obj) {
             if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
@@ -66,12 +76,22 @@ apiGateway.core.utils = {
         return copy;
     },
     mergeInto: function (baseObj, additionalProps) {
-        if (null == baseObj || "object" != typeof baseObj) return baseObj;
+        if (baseObj === null || typeof baseObj !== 'object') {
+            return baseObj;
+        }
+
+        // Typed arrays/ArrayBuffers should just pass through unchanged.
+        if (typeof ArrayBuffer !== 'undefined') {
+            if (baseObj instanceof ArrayBuffer || ArrayBuffer.isView(baseObj)) {
+                return baseObj;
+            }
+        }
+
         var merged = baseObj.constructor();
         for (var attr in baseObj) {
             if (baseObj.hasOwnProperty(attr)) merged[attr] = baseObj[attr];
         }
-        if (null == additionalProps || "object" != typeof additionalProps) return baseObj;
+        if (additionalProps === null || typeof additionalProps !== 'object') return baseObj;
         for (attr in additionalProps) {
             if (additionalProps.hasOwnProperty(attr)) merged[attr] = additionalProps[attr];
         }
