@@ -92,6 +92,62 @@ function renderResults(results) {
 // UPLOAD
 // ========================================
 
+// document.getElementById('uploadBtn').onclick = function () {
+//   const fileInput = document.getElementById('fileInput');
+//   const labelsInput = document.getElementById('customLabels');
+//   const statusEl = document.getElementById('uploadStatus');
+
+//   if (!fileInput.files.length) {
+//     statusEl.innerText = 'Please choose an image file.';
+//     return;
+//   }
+
+//   const file = fileInput.files[0];
+//   const customLabels = labelsInput.value.trim();
+
+//   statusEl.innerText = 'Uploading...';
+
+//   const reader = new FileReader();
+//   reader.onload = function (e) {
+//     const fileData = e.target.result;
+//     const params = {
+//       filename: file.name,
+//       'Content-Type': file.type,
+//       'x-amz-meta-customLabels': customLabels
+//     };
+
+//   // reader.onload = function (e) {
+//   //   const arrayBuffer = e.target.result;
+//   //   const uint8Array = new Uint8Array(arrayBuffer);
+//   //   const params = {
+//   //     filename: file.name,
+//   //     "Content-Type": file.type,
+//   //     "x-amz-meta-customLabels": customLabels
+//   //   };
+
+//     const body = fileData
+//     const additionalParams = {
+//       "headers":{
+//         "Content-Type": file.type,
+//       }
+//     };
+
+//     apigClient.uploadFilenamePut(params, body, additionalParams)
+//       .then(function (response) {
+//         console.log('Upload response', response);
+//         statusEl.innerText = 'Upload successful!';
+//       })
+//       .catch(function (err) {
+//         console.error('Upload error', err);
+//         statusEl.innerText = 'Upload failed. See console for details.';
+//       });
+//   };
+
+//   // Important: read as ArrayBuffer so the SDK can send binary body
+//   reader.readAsArrayBuffer(file);
+// };
+
+
 document.getElementById('uploadBtn').onclick = function () {
   const fileInput = document.getElementById('fileInput');
   const labelsInput = document.getElementById('customLabels');
@@ -109,40 +165,33 @@ document.getElementById('uploadBtn').onclick = function () {
 
   const reader = new FileReader();
   reader.onload = function (e) {
-    const fileData = e.target.result;
+    // Example: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
+    const dataUrl = e.target.result;
+
+    // Extract the base64 payload only
+    const base64Data = dataUrl.split(",")[1];
+
     const params = {
       filename: file.name,
-      'Content-Type': file.type,
-      'x-amz-meta-customLabels': customLabels
+      "Content-Type": file.type,
+      "x-amz-meta-customlabels": customLabels
     };
 
-  // reader.onload = function (e) {
-  //   const arrayBuffer = e.target.result;
-  //   const uint8Array = new Uint8Array(arrayBuffer);
-  //   const params = {
-  //     filename: file.name,
-  //     "Content-Type": file.type,
-  //     "x-amz-meta-customLabels": customLabels
-  //   };
-
-    const body = fileData
+    const body = base64Data;
     const additionalParams = {
-      "headers":{
-        "Content-Type": file.type,
-      }
+      headers: { "Content-Type": file.type }
     };
 
     apigClient.uploadFilenamePut(params, body, additionalParams)
       .then(function (response) {
-        console.log('Upload response', response);
-        statusEl.innerText = 'Upload successful!';
+        console.log("Upload response", response);
+        statusEl.innerText = "Upload successful!";
       })
       .catch(function (err) {
-        console.error('Upload error', err);
-        statusEl.innerText = 'Upload failed. See console for details.';
+        console.error("Upload error", err);
+        statusEl.innerText = "Upload failed. See console for details.";
       });
   };
 
-  // Important: read as ArrayBuffer so the SDK can send binary body
-  reader.readAsArrayBuffer(file);
+  reader.readAsDataURL(file);
 };
