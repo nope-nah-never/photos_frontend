@@ -108,13 +108,13 @@ document.getElementById('uploadBtn').onclick = function () {
   statusEl.innerText = 'Uploading...';
 
   const reader = new FileReader();
-  // reader.onload = function (e) {
-  //   const fileData = e.target.result;
-  //   const params = {
-  //     filename: file.name,
-  //     'Content-Type': file.type,
-  //     'x-amz-meta-customLabels': customLabels
-  //   };
+  reader.onload = function (e) {
+    const fileData = e.target.result;
+    const params = {
+      filename: file.name,
+      'Content-Type': file.type,
+      'x-amz-meta-customLabels': customLabels
+    };
 
   // reader.onload = function (e) {
   //   const arrayBuffer = e.target.result;
@@ -125,46 +125,20 @@ document.getElementById('uploadBtn').onclick = function () {
   //     "x-amz-meta-customLabels": customLabels
   //   };
 
-  //   const additionalParams = {};
-
-  //   apigClient.uploadFilenamePut(params, uint8Array, additionalParams)
-  //     .then(function (response) {
-  //       console.log('Upload response', response);
-  //       statusEl.innerText = 'Upload successful!';
-  //     })
-  //     .catch(function (err) {
-  //       console.error('Upload error', err);
-  //       statusEl.innerText = 'Upload failed. See console for details.';
-  //     });
-  // };
-
-  // // Important: read as ArrayBuffer so the SDK can send binary body
-  // reader.readAsArrayBuffer(file);
-
-  reader.onload = function (e) {
-    const arrayBuffer = e.target.result;
-
-    const params = {
-        filename: file.name,
-        "Content-Type": file.type,
-        "x-amz-meta-customLabels": customLabels,
-    };
-
+    const body = fileData
     const additionalParams = {};
 
-    // Wrap the ArrayBuffer in a Blob
-    const body = new Blob([arrayBuffer], { type: file.type });
-
     apigClient.uploadFilenamePut(params, body, additionalParams)
-        .then(function (response) {
-            console.log("Upload response", response);
-            statusEl.innerText = "Upload successful!";
-        })
-        .catch(function (err) {
-            console.error("Upload error", err);
-            statusEl.innerText = "Upload failed. See console for details.";
-        });
+      .then(function (response) {
+        console.log('Upload response', response);
+        statusEl.innerText = 'Upload successful!';
+      })
+      .catch(function (err) {
+        console.error('Upload error', err);
+        statusEl.innerText = 'Upload failed. See console for details.';
+      });
   };
 
+  // Important: read as ArrayBuffer so the SDK can send binary body
   reader.readAsArrayBuffer(file);
 };
