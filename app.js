@@ -102,15 +102,13 @@ document.getElementById('uploadBtn').onclick = function () {
   }
 
   const file = fileInput.files[0];
-  const customLabels = labelsInput.value.trim(); // e.g. "Sam, Sally"
+  const customLabels = labelsInput.value.trim();
 
   statusEl.innerText = 'Uploading...';
 
   const reader = new FileReader();
   reader.onload = function (e) {
-    const fileData = e.target.result; // ArrayBuffer containing the image bytes
-
-    // uploadFilenamePut requires: ['filename', 'Content-Type', 'x-amz-meta-customLabels']
+    const fileData = e.target.result;
     const params = {
       filename: file.name,
       'Content-Type': file.type || 'image/jpeg',
